@@ -3,11 +3,15 @@ const fastify = require('fastify');
 const cors = require('@fastify/cors');
 
 const schema = `
+  type Notification {
+    id: ID!
+    message: String
+  }
   type Query {
     add(x: Int, y: Int): Int
   }
   type Subscription {
-    test(id: ID!): ID
+    test(id: ID!): Notification
   }
 `;
 
@@ -22,7 +26,7 @@ const resolvers = {
   },
 };
 
-const app = fastify({ logger: true });
+const app = fastify({ logger: true, disableRequestLogging: true });
 
 app.register(cors, { origin: true });
 app.register(mercurius, {
