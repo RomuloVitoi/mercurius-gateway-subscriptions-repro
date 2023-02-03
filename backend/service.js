@@ -2,6 +2,8 @@ const mercurius = require('mercurius');
 const fastify = require('fastify');
 const cors = require('@fastify/cors');
 
+const { withFilter } = mercurius;
+
 const schema = `
   type Notification {
     id: ID!
@@ -10,18 +12,40 @@ const schema = `
   type Query {
     add(x: Int, y: Int): Int
   }
+  type Mutation {
+    addNotification(id: ID!): Notification
+  }
   type Subscription {
-    test(id: ID!): Notification
+    notificationAdded(id: ID!): Notification
   }
 `;
 
 const resolvers = {
+  Mutation: {
+    addNotification: async (root, args, { pubsub }) => {
+      const notification = {
+        id: args.id,
+        message: 'some message',
+      };
+      await pubsub.publish({
+        topic: 'NOTIFICATION_ADDED',
+        payload: { notificationAdded: notification },
+      });
+      return notification;
+    },
+  },
   Subscription: {
-    test: {
-      subscribe: (root, args, { pubsub }) => {
-        console.log('=== subscribe', args);
-        return pubsub.subscribe('TEST_TOPIC');
-      },
+    notificationAdded: {
+      subscribe: withFilter(
+        (root, args, { pubsub }) => {
+          console.log('=== subscribe', args);
+          return pubsub.subscribe('NOTIFICATION_ADDED');
+        },
+        (payload, args) => {
+          console.log('=== filter', args, payload);
+          return true;
+        }
+      ),
     },
   },
 };
