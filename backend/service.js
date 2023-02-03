@@ -22,10 +22,7 @@ const resolvers = {
   },
 };
 
-const app = fastify({
-  logger: true,
-  disableRequestLogging: true,
-});
+const app = fastify({ logger: true });
 
 app.register(cors, { origin: true });
 app.register(mercurius, {

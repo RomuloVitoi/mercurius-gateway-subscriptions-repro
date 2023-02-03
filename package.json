@@ -18,10 +18,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start:gateway": "node gateway.js",
-    "start:service": "node service.js",
-    "start:gateway:dev": "nodemon --watch gateway.js gateway.js",
-    "start:service:dev": "nodemon --watch service.js service.js"
+    "start:gateway": "node backend/gateway.js",
+    "start:service": "node backend/service.js",
+    "start:gateway:dev": "nodemon --watch backend/gateway.js backend/gateway.js",
+    "start:service:dev": "nodemon --watch backend/service.js backend/service.js"
   },
   "eslintConfig": {
     "extends": [

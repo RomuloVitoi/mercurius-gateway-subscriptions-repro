@@ -2,10 +2,7 @@ const mercurius = require('mercurius');
 const fastify = require('fastify');
 const cors = require('@fastify/cors');
 
-const app = fastify({
-  logger: true,
-  disableRequestLogging: true,
-});
+const app = fastify({ logger: true });
 
 app.register(cors, { origin: true });
 app.register(mercurius, {
