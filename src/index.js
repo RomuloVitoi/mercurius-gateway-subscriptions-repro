@@ -8,11 +8,11 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 
 const wsClient = createWSClient({
-  url: 'ws://localhost:3002/graphql',
+  url: 'ws://localhost:3001/graphql',
 });
 
 const client = createClient({
-  url: 'http://localhost:3002/graphql',
+  url: 'http://localhost:3001/graphql',
   exchanges: [
     ...defaultExchanges,
     subscriptionExchange({

@@ -14,7 +14,7 @@ const schema = `
 const resolvers = {
   Subscription: {
     test: {
-      subscribe: async (root, args, { pubsub }) => {
+      subscribe: (root, args, { pubsub }) => {
         console.log('=== subscribe', args);
         return pubsub.subscribe('TEST_TOPIC');
       },
@@ -33,6 +33,7 @@ app.register(mercurius, {
   resolvers,
   graphiql: true,
   subscription: true,
+  federationMetadata: true,
 });
 
 app.listen({ port: 3002 }, function (err, address) {

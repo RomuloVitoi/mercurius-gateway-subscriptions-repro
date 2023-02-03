@@ -22,7 +22,10 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "start:service:dev": "nodemon service.js"
+    "start:gateway": "node gateway.js",
+    "start:service": "node service.js",
+    "start:gateway:dev": "nodemon --watch gateway.js gateway.js",
+    "start:service:dev": "nodemon --watch service.js service.js"
   },
   "eslintConfig": {
     "extends": [
