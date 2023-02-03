@@ -7,12 +7,16 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const BACKEND_PORT = 3001;
+// switch to this to connect directly to the service
+// const BACKEND_PORT = 3002;
+
 const wsClient = createWSClient({
-  url: 'ws://localhost:3001/graphql',
+  url: `ws://localhost:${BACKEND_PORT}/graphql`,
 });
 
 const client = createClient({
-  url: 'http://localhost:3001/graphql',
+  url: `http://localhost:${BACKEND_PORT}/graphql`,
   exchanges: [
     ...defaultExchanges,
     subscriptionExchange({
