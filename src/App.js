@@ -1,14 +1,17 @@
-import { useQuery } from 'urql';
+import { useSubscription } from 'urql';
 
-const TestQuery = `
-  query {
-    add(x:5,y:7)
+const TestSubscription = `
+  subscription MySubscription($id:ID!) {
+    test(id:$id)
   }
 `;
 
 function App() {
-  useQuery({
-    query: TestQuery,
+  useSubscription({
+    query: TestSubscription,
+    variables: {
+      id: 1,
+    },
   });
 
   return <div className="App"></div>;

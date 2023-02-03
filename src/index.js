@@ -1,12 +1,28 @@
-import { createClient, Provider } from 'urql';
+import { createClient, Provider, defaultExchanges, subscriptionExchange } from 'urql';
+import { createClient as createWSClient } from 'graphql-ws';
+
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
+const wsClient = createWSClient({
+  url: 'ws://localhost:3002/graphql',
+});
+
 const client = createClient({
   url: 'http://localhost:3002/graphql',
+  exchanges: [
+    ...defaultExchanges,
+    subscriptionExchange({
+      forwardSubscription: (operation) => ({
+        subscribe: (sink) => ({
+          unsubscribe: wsClient.subscribe(operation, sink),
+        }),
+      }),
+    }),
+  ],
 });
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
