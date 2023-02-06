@@ -1,4 +1,5 @@
 const mercurius = require('mercurius');
+const { mercuriusFederationPlugin } = require('@mercuriusjs/federation')
 const fastify = require('fastify');
 const cors = require('@fastify/cors');
 
@@ -53,7 +54,7 @@ const resolvers = {
 const app = fastify({ logger: true, disableRequestLogging: true });
 
 app.register(cors, { origin: true });
-app.register(mercurius, {
+app.register(mercuriusFederationPlugin, {
   schema,
   resolvers,
   graphiql: true,
